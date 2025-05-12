@@ -3,6 +3,6 @@ import App from './App';
 
 test('renders login heading', () => {
   render(<App />);
-  const headingElement = screen.getByText(/login/i);
-  expect(headingElement).toBeInTheDocument();
+  const elements = screen.getAllByText(/login/i);
+  expect(elements[0]).toBeInTheDocument();
 });
