@@ -5,16 +5,20 @@ function App() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-    const handleLogin = () => {
-      fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      })
+  const handleLogin = () => {
+    fetch('http://localhost:5000/login', {  // 🔁 Updated port
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
       .then(response => {
-        if (!response.ok) throw new Error("Server error");
+        if (!response.ok) {
+          return response.json().then(err => {
+            throw new Error(err.message || "Login failed");
+          });
+        }
         return response.json();
       })
       .then(data => {
@@ -25,7 +29,7 @@ function App() {
       })
       .catch(error => {
         console.error('Login error:', error);
-        setMessage('Error occurred');
+        setMessage(error.message);
       });
   };
 
@@ -35,8 +39,7 @@ function App() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleLogin(); // 👈 Using fetch
-          // Or use handleSubmit() if you prefer axios
+          handleLogin();
         }}
       >
         <input

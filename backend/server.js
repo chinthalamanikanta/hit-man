@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 
 // ✅ Use CORS before routes
-app.use(cors({ origin: 'http://localhost:3001' }));
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 // ✅ Winston logger with timestamp
 const logger = winston.createLogger({
@@ -24,7 +24,7 @@ const logger = winston.createLogger({
 
 app.use(express.json()); // For parsing application/json
 
-// Simulating login route
+// Simulated login route
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -39,7 +39,7 @@ app.post('/login', (req, res) => {
     }
 });
 
-// Start the server
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+// ✅ Start server on port 5000
+app.listen(5000, () => {
+    console.log('Server running on port 5000');
 });
